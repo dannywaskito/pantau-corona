@@ -1,0 +1,57 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+class Home extends CI_Controller {
+	public function index()
+	{
+		$indonesia=json_decode(file_get_contents('https://api.kawalcorona.com/indonesia'),true);
+		$provinsi=json_decode(file_get_contents('https://api.kawalcorona.com/indonesia/provinsi'),true);
+		$data = array(
+
+			'title' =>'Update Covid 19 Indonesia' ,
+			'indonesia'=>$indonesia,
+			'provinsi'=>$provinsi,
+			'isi' =>'home' ,
+		);
+		$this->load->view('layout/wrapper',$data);
+	}
+public function global()
+	{
+		$global=json_decode(file_get_contents('https://api.kawalcorona.com/'),true);
+		$positif=json_decode(file_get_contents('https://api.kawalcorona.com/positif'),true);
+		$sembuh=json_decode(file_get_contents('https://api.kawalcorona.com/sembuh'),true);
+		$meninggal=json_decode(file_get_contents('https://api.kawalcorona.com/meninggal'),true);
+		$data = array(
+
+			'title' =>'Update Covid 19 Seluruh Dunia' ,
+			'global'=>$global,
+			'positif'=>$positif,
+			'sembuh'=>$sembuh,
+			'meninggal'=>$meninggal,
+			'isi' =>'global' ,
+		);
+		$this->load->view('layout/wrapper',$data);
+	}
+	public function dunia()
+	{
+		$dunia=json_decode(file_get_contents('https://api.kawalcorona.com/'),true);
+		$data = array(
+
+			'title' =>'Peta Dunia Update Covid 19 ',
+			'dunia'=> $dunia,
+			'isi' =>'dunia' ,
+		);
+		$this->load->view('layout/wrapper',$data);
+	}
+		public function nasional()
+	{
+		$nasional=json_decode(file_get_contents('https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'),true);
+		$data = array(
+
+			'title' =>'Peta Nasional Update Covid 19 ',
+			'nasional'=> $nasional,
+			'isi' =>'nasional' ,
+		);
+		$this->load->view('layout/wrapper',$data);
+	}
+}
